@@ -144,7 +144,7 @@ export default function ArticleDetail() {
       {/* Article Header & Hero */}
       <header className="article-hero">
         <img 
-          src={`https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1000&q=80`} 
+          src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=75" 
           alt="" 
           className="article-hero-image"
           width="800"

@@ -15,13 +15,14 @@ function ArticleCardComponent({ id, title, body, userId, author, authorId, onCli
   const tag = tags[id % tags.length];
 
   // Pick a mock image from a pool of premium news photos to avoid placeholders
+  // Sized and formatted to WebP to eliminate image delivery blockages
   const images = [
-    'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&q=80', // Newspaper
-    'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&q=80', // Tech/Globe
-    'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&q=80', // Finance/Bldg
-    'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=400&q=80', // Journalism
-    'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&q=80', // Cyber/Code
-    'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&q=80'  // Laptop
+    'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=350&q=75', // Newspaper
+    'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=350&q=75', // Tech/Globe (Preloaded LCP)
+    'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=350&q=75', // Finance/Bldg
+    'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=350&q=75', // Journalism
+    'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=350&q=75', // Cyber/Code
+    'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=350&q=75'  // Laptop
   ];
   const imageSrc = images[id % images.length];
 
