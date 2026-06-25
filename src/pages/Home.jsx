@@ -28,18 +28,20 @@ export default function Home() {
         </div>
 
         {/* Global Content Search */}
-        <div className="search-container">
+        <section className="search-container" aria-label="Archive search filter">
           <input
             type="text"
             className="search-input"
             placeholder="Search articles by title, content, or tag (e.g. tech, politics, finance)..."
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
+            aria-label="Search articles by title, content, or tag"
           />
-          <span className="search-icon">🔍</span>
+          <span className="search-icon" aria-hidden="true">🔍</span>
           {inputValue && (
             <button
               onClick={handleClearSearch}
+              aria-label="Clear search input content"
               style={{
                 position: 'absolute',
                 right: '16px',
@@ -52,10 +54,10 @@ export default function Home() {
                 fontSize: '1rem',
               }}
             >
-              ✕
+              <span aria-hidden="true">✕</span>
             </button>
           )}
-        </div>
+        </section>
 
         {/* Lazy Archive List */}
         <Suspense fallback={<ArchiveSkeleton count={6} />}>

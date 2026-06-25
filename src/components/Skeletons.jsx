@@ -5,7 +5,7 @@ import React from 'react';
  */
 export function SkeletonCard() {
   return (
-    <div className="skeleton-card glass-panel">
+    <div className="skeleton-card glass-panel" aria-hidden="true">
       <div className="skeleton-image shimmer" />
       <div className="skeleton-tag shimmer" />
       <div className="skeleton-title shimmer" />
@@ -25,7 +25,7 @@ export function SkeletonCard() {
  */
 export function ArchiveSkeleton({ count = 6 }) {
   return (
-    <div className="articles-grid">
+    <div className="articles-grid" aria-hidden="true">
       {Array.from({ length: count }).map((_, idx) => (
         <SkeletonCard key={idx} />
       ))}
@@ -38,7 +38,7 @@ export function ArchiveSkeleton({ count = 6 }) {
  */
 export function AuthorProfileSkeleton() {
   return (
-    <div className="skeleton-profile-container glass-panel">
+    <div className="skeleton-profile-container glass-panel" aria-hidden="true">
       <div className="skeleton-avatar shimmer" />
       <div className="skeleton-name shimmer" />
       <div className="skeleton-tag shimmer" style={{ width: '120px' }} />
@@ -58,7 +58,7 @@ export function AuthorProfileSkeleton() {
  */
 export function RecommendedSkeleton({ count = 3 }) {
   return (
-    <div className="recommendations-grid">
+    <div className="recommendations-grid" aria-hidden="true">
       {Array.from({ length: count }).map((_, idx) => (
         <div 
           key={idx} 

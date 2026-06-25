@@ -87,7 +87,7 @@ export default function AuthorProfile() {
 
   if (loading) {
     return (
-      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 0' }}>
+      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 0' }} aria-hidden="true">
         <AuthorProfileSkeleton />
       </div>
     );
@@ -105,28 +105,30 @@ export default function AuthorProfile() {
   return (
     <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
       {/* Author Bio Card */}
-      <div className="author-profile-card glass-panel">
+      <section className="author-profile-card glass-panel" aria-label={`Journalist Bio: ${author.name}`}>
         <img 
           src={author.avatar} 
           alt={author.name} 
           className="author-avatar"
+          width="120"
+          height="120"
         />
         <h2 className="author-name">{author.name}</h2>
         <div className="author-role">{author.role}</div>
         <p className="author-bio">{author.bio}</p>
         
         <div className="author-socials">
-          <a href={`https://twitter.com/${author.twitter}`} target="_blank" rel="noopener noreferrer" className="author-social-btn">
+          <a href={`https://twitter.com/${author.twitter}`} target="_blank" rel="noopener noreferrer" className="author-social-btn" aria-label={`Follow ${author.name} on Twitter`}>
             Twitter ({author.twitter})
           </a>
-          <a href={`https://${author.linkedin}`} target="_blank" rel="noopener noreferrer" className="author-social-btn">
+          <a href={`https://${author.linkedin}`} target="_blank" rel="noopener noreferrer" className="author-social-btn" aria-label={`Visit ${author.name}'s Website`}>
             Website
           </a>
-          <a href={`mailto:${author.email}`} className="author-social-btn">
+          <a href={`mailto:${author.email}`} className="author-social-btn" aria-label={`Email ${author.name}`}>
             Email
           </a>
         </div>
-      </div>
+      </section>
 
       {/* Publications Section */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '40px 0 20px 0' }}>
@@ -142,6 +144,7 @@ export default function AuthorProfile() {
             className="search-input"
             value={searchVal}
             onChange={(e) => setSearchVal(e.target.value)}
+            aria-label="Search journalist publications"
             style={{ 
               padding: '10px 12px 10px 32px', 
               fontSize: '0.85rem',
@@ -150,6 +153,7 @@ export default function AuthorProfile() {
           />
           <span 
             className="search-icon" 
+            aria-hidden="true"
             style={{ 
               left: '12px', 
               fontSize: '0.95rem' 
@@ -165,20 +169,23 @@ export default function AuthorProfile() {
           No publications match your search filter.
         </div>
       ) : (
-        <div className="articles-grid">
-          {filteredPublications.map(post => (
-            <ArticleCard
-              key={post.id}
-              id={post.id}
-              title={post.title}
-              body={post.body}
-              userId="user123"
-              author={author.name}
-              authorId={author.id}
-              onClick={handleArticleClick}
-            />
-          ))}
-        </div>
+        <section aria-label="Journalist publication cards grid">
+          <ul className="articles-grid" style={{ listStyle: 'none' }}>
+            {filteredPublications.map(post => (
+              <li key={post.id}>
+                <ArticleCard
+                  id={post.id}
+                  title={post.title}
+                  body={post.body}
+                  userId="user123"
+                  author={author.name}
+                  authorId={author.id}
+                  onClick={handleArticleClick}
+                />
+              </li>
+            ))}
+          </ul>
+        </section>
       )}
     </div>
   );

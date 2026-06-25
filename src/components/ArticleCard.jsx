@@ -1,11 +1,9 @@
 import React, { useRef } from 'react';
+import { Link } from 'react-router-dom';
 
 function ArticleCardComponent({ id, title, body, userId, author, authorId, onClick }) {
   const renderCount = useRef(0);
   renderCount.current += 1;
-  
-  // Log rendering to verify memoization works as expected
-  // console.log(`[ArticleCard ${id}] Render count: ${renderCount.current}`);
 
   // Extract a brief summary of the article body
   const excerpt = body 
@@ -38,15 +36,26 @@ function ArticleCardComponent({ id, title, body, userId, author, authorId, onCli
   };
 
   return (
-    <div className="article-card glass-panel" onClick={handleCardClick}>
+    <article 
+      className="article-card glass-panel" 
+      onClick={handleCardClick}
+      role="button"
+      tabIndex="0"
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          if (onClick) onClick(id, title);
+        }
+      }}
+      aria-label={`Article: ${title} by ${author}`}
+    >
       {/* Set loading="lazy" on images that are likely below the fold to boost performance */}
       <img 
         src={imageSrc} 
-        alt={title} 
+        alt="" 
         className="article-card-image"
         loading="lazy" 
-        width="100%"
-        height="180px"
+        width="400"
+        height="180"
       />
       <div className="article-card-body">
         <span className="article-card-tag">{tag}</span>
@@ -54,11 +63,20 @@ function ArticleCardComponent({ id, title, body, userId, author, authorId, onCli
         <p className="article-card-excerpt">{excerpt}</p>
         
         <div className="article-card-meta">
-          <span>By <a href={`/author/${authorId}`} className="article-card-author">{author}</a></span>
+          <span>
+            By{' '}
+            <Link 
+              to={`/author/${authorId}`} 
+              className="article-card-author"
+              aria-label={`View author profile of ${author}`}
+            >
+              {author}
+            </Link>
+          </span>
           <span style={{ fontSize: '0.65rem', color: '#10b981' }}>Renders: {renderCount.current}</span>
         </div>
       </div>
-    </div>
+    </article>
   );
 }
 

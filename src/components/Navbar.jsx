@@ -3,9 +3,9 @@ import { NavLink } from 'react-router-dom';
 
 export default function Navbar() {
   return (
-    <nav className="navbar">
-      <NavLink to="/" className="nav-logo">
-        <span style={{ fontSize: '1.8rem', color: '#10b981' }}>❖</span>
+    <nav className="navbar" aria-label="Veridian Chronicle Main Navigation">
+      <NavLink to="/" className="nav-logo" aria-label="Veridian Chronicle Home">
+        <span style={{ fontSize: '1.8rem', color: '#10b981' }} aria-hidden="true">❖</span>
         <span>VERIDIAN CHRONICLE</span>
       </NavLink>
       <ul className="nav-links">

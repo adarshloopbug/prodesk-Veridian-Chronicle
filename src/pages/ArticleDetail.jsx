@@ -142,11 +142,13 @@ export default function ArticleDetail() {
   return (
     <div className="article-detail-container">
       {/* Article Header & Hero */}
-      <div className="article-hero">
+      <header className="article-hero">
         <img 
           src={`https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1000&q=80`} 
-          alt={article.title} 
+          alt="" 
           className="article-hero-image"
+          width="800"
+          height="400"
         />
         <div className="article-hero-overlay">
           <span 
@@ -168,10 +170,10 @@ export default function ArticleDetail() {
             <span>June 25, 2026</span>
           </div>
         </div>
-      </div>
+      </header>
 
       {/* Control Panel: Simulation Toggle */}
-      <div 
+      <section 
         className="glass-panel" 
         style={{ 
           padding: '16px 20px', 
@@ -181,12 +183,14 @@ export default function ArticleDetail() {
           alignItems: 'center',
           fontSize: '0.85rem'
         }}
+        aria-label="Simulation controls"
       >
         <span style={{ color: 'var(--text-secondary)' }}>
           Reading History: <strong>{hasHistory ? 'Enabled (Sarah\'s Profile)' : 'Empty / Disabled'}</strong>
         </span>
         <button 
           onClick={handleToggleHistory}
+          aria-label="Toggle user reading history simulation state"
           style={{ 
             background: hasHistory ? '#10b981' : '#3b82f6', 
             color: '#fff',
@@ -199,7 +203,7 @@ export default function ArticleDetail() {
         >
           Toggle Reading History
         </button>
-      </div>
+      </section>
 
       {/* Article Body Content */}
       <div className="article-body">
@@ -208,7 +212,7 @@ export default function ArticleDetail() {
         ))}
 
         {/* Ad Placement 1: After 3rd paragraph of content */}
-        <Suspense fallback={<div className="ad-wrapper shimmer" style={{ height: '90px', margin: '16px auto' }}>ADVERTISEMENT LOADING...</div>}>
+        <Suspense fallback={<div className="ad-wrapper shimmer" style={{ height: '90px', margin: '16px auto' }} aria-hidden="true">ADVERTISEMENT LOADING...</div>}>
           <AdPlacement type="inline" />
         </Suspense>
 
@@ -218,7 +222,7 @@ export default function ArticleDetail() {
       </div>
 
       {/* Ad Placement 2: At the bottom of page, before the comments section */}
-      <Suspense fallback={<div className="ad-wrapper shimmer" style={{ height: '90px', margin: '32px auto' }}>ADVERTISEMENT LOADING...</div>}>
+      <Suspense fallback={<div className="ad-wrapper shimmer" style={{ height: '90px', margin: '32px auto' }} aria-hidden="true">ADVERTISEMENT LOADING...</div>}>
         <AdPlacement type="banner" />
       </Suspense>
 
@@ -244,18 +248,22 @@ export default function ArticleDetail() {
       </div>
 
       {/* Comments Section */}
-      <div className="comments-section">
+      <section className="comments-section" aria-label="Comments section">
         <h3 className="comments-title">Discussion ({comments.length})</h3>
-        {comments.map((comment) => (
-          <div key={comment.id} className="comment-card glass-panel">
-            <div className="comment-header">
-              <span className="comment-author">{comment.email}</span>
-              <span className="comment-date">2 hours ago</span>
-            </div>
-            <p className="comment-text">"{comment.body}"</p>
-          </div>
-        ))}
-      </div>
+        <ul style={{ display: 'flex', flexDirection: 'column', gap: '16px', listStyle: 'none' }}>
+          {comments.map((comment) => (
+            <li key={comment.id}>
+              <div className="comment-card glass-panel">
+                <div className="comment-header">
+                  <span className="comment-author">{comment.email}</span>
+                  <span className="comment-date">2 hours ago</span>
+                </div>
+                <p className="comment-text">"{comment.body}"</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
 
       {/* Back to Archive Link */}
       <div style={{ marginTop: '40px', textAlign: 'center' }}>
@@ -276,7 +284,7 @@ export default function ArticleDetail() {
 
       {/* Live Analytics Dashboard Indicator for verification */}
       {analyticsLogs.length > 0 && (
-        <div className="analytics-badge">
+        <div className="analytics-badge" aria-live="polite">
           Analytics Out: {analyticsLogs[0].event}
         </div>
       )}

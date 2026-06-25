@@ -17,7 +17,7 @@ function TrendingArticlesSidebarComponent() {
         'https://jsonplaceholder.typicode.com/posts?_limit=5&_sort=id&_order=desc'
       );
       if (response.ok) {
-        const data = await response.ok ? await response.json() : [];
+        const data = await response.json();
         // Map to simulate news-like categories and view counts
         const mappedData = data.map((item, idx) => ({
           id: item.id,
@@ -49,14 +49,14 @@ function TrendingArticlesSidebarComponent() {
   return (
     <div className="sidebar-container glass-panel" style={{ padding: '24px', width: '100%' }}>
       <div className="pulse-header">
-        <span className="pulse-dot"></span>
+        <span className="pulse-dot" aria-hidden="true"></span>
         <h3 style={{ textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: '1.1rem' }}>
           Veridian Pulse
         </h3>
       </div>
       
       {loading ? (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }} aria-hidden="true">
           {Array.from({ length: 5 }).map((_, idx) => (
             <div key={idx} style={{ display: 'flex', gap: '12px' }}>
               <div className="shimmer" style={{ width: '24px', height: '24px', borderRadius: '4px' }} />
@@ -69,14 +69,26 @@ function TrendingArticlesSidebarComponent() {
         </div>
       ) : (
         <div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <ul 
+            className="trending-list"
+            style={{ display: 'flex', flexDirection: 'column', gap: '16px', listStyle: 'none' }}
+            aria-label="Trending articles list"
+          >
             {trending.map((article, idx) => (
-              <div
+              <li
                 key={article.id}
                 className="trending-item"
+                role="button"
+                tabIndex="0"
                 onClick={() => navigate(`/articles/${article.id}`)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    navigate(`/articles/${article.id}`);
+                  }
+                }}
+                aria-label={`Trending article ${idx + 1}: ${article.title}`}
               >
-                <div className="trending-num">
+                <div className="trending-num" aria-hidden="true">
                   {String(idx + 1).padStart(2, '0')}
                 </div>
                 <div className="trending-content">
@@ -88,9 +100,9 @@ function TrendingArticlesSidebarComponent() {
                     <span>{(article.views / 1000).toFixed(1)}k views</span>
                   </div>
                 </div>
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
           <div 
             style={{ 
               marginTop: '20px', 

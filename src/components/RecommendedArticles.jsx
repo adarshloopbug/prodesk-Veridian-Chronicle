@@ -57,7 +57,7 @@ export default function RecommendedArticles({ articleId }) {
     return (
       <div style={{ textAlign: 'center', padding: '20px' }}>
         <p style={{ color: 'var(--text-secondary)', marginBottom: '12px' }}>Loading Recommendations...</p>
-        <div style={{ display: 'flex', gap: '16px' }}>
+        <div style={{ display: 'flex', gap: '16px' }} aria-hidden="true">
           {Array.from({ length: 3 }).map((_, idx) => (
             <div key={idx} className="skeleton-card shimmer" style={{ flex: 1, height: '140px' }} />
           ))}
@@ -67,7 +67,7 @@ export default function RecommendedArticles({ articleId }) {
   }
 
   return (
-    <div>
+    <section aria-label="Recommended Content">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
         <h3 style={{ fontSize: '1.25rem', fontFamily: 'Outfit, sans-serif' }}>Recommended For You</h3>
         <span 
@@ -83,57 +83,66 @@ export default function RecommendedArticles({ articleId }) {
           {source}
         </span>
       </div>
-      <div className="recommendations-grid">
+      <ul className="recommendations-grid" style={{ listStyle: 'none' }}>
         {articles.map((item) => (
-          <div 
-            key={item.id} 
-            className="glass-panel" 
-            style={{ 
-              padding: '20px', 
-              borderRadius: 'var(--radius-md)', 
-              cursor: 'pointer',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              height: '100%',
-              minHeight: '160px',
-              transition: 'var(--transition-smooth)'
-            }}
-            onClick={() => navigate(`/articles/${item.id}`)}
-          >
-            <div>
-              <span 
-                style={{ 
-                  fontSize: '0.65rem', 
-                  fontWeight: 700, 
-                  color: 'var(--text-muted)', 
-                  display: 'block', 
-                  marginBottom: '8px' 
-                }}
-              >
-                {item.category} • {item.readTime}
-              </span>
-              <h4 
-                style={{ 
-                  fontSize: '1rem', 
-                  lineHeight: '1.3', 
-                  fontFamily: 'Outfit, sans-serif',
-                  display: '-webkit-box',
-                  WebkitLineClamp: 2,
-                  WebkitBoxOrient: 'vertical',
-                  overflow: 'hidden',
-                  marginBottom: '12px'
-                }}
-              >
-                {item.title}
-              </h4>
+          <li key={item.id}>
+            <div 
+              className="glass-panel" 
+              role="button"
+              tabIndex="0"
+              style={{ 
+                padding: '20px', 
+                borderRadius: 'var(--radius-md)', 
+                cursor: 'pointer',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                height: '100%',
+                minHeight: '160px',
+                transition: 'var(--transition-smooth)'
+              }}
+              onClick={() => navigate(`/articles/${item.id}`)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  navigate(`/articles/${item.id}`);
+                }
+              }}
+              aria-label={`Recommended article: ${item.title} by ${item.author}`}
+            >
+              <div>
+                <span 
+                  style={{ 
+                    fontSize: '0.65rem', 
+                    fontWeight: 700, 
+                    color: 'var(--text-muted)', 
+                    display: 'block', 
+                    marginBottom: '8px' 
+                  }}
+                >
+                  {item.category} • {item.readTime}
+                </span>
+                <h4 
+                  style={{ 
+                    fontSize: '1rem', 
+                    lineHeight: '1.3', 
+                    fontFamily: 'Outfit, sans-serif',
+                    display: '-webkit-box',
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: 'vertical',
+                    overflow: 'hidden',
+                    marginBottom: '12px'
+                  }}
+                >
+                  {item.title}
+                </h4>
+              </div>
+              <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '8px' }}>
+                By {item.author}
+              </div>
             </div>
-            <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '8px' }}>
-              By {item.author}
-            </div>
-          </div>
+          </li>
         ))}
-      </div>
-    </div>
+      </ul>
+    </section>
   );
 }

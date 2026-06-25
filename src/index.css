@@ -2,8 +2,6 @@
    Veridian Chronicle Premium CSS Design System
    ========================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
-
 :root {
   --bg-primary: #0a0c10;
   --bg-secondary: #11141d;
@@ -17,8 +15,8 @@
   --accent-gradient: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
   
   --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
+  --text-secondary: #a0aec0; /* Increased contrast for accessibility */
+  --text-muted: #8898aa;     /* Increased contrast to meet WCAG AA standards (exceeds 4.5:1) */
   
   --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
@@ -197,6 +195,11 @@ h1, h2, h3, h4, h5, h6 {
   font-family: inherit;
 }
 
+.search-input::placeholder {
+  color: var(--text-muted);
+  opacity: 1; /* Override default browser light grey */
+}
+
 .search-input:focus {
   border-color: var(--accent-primary);
   box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
@@ -334,6 +337,12 @@ h1, h2, h3, h4, h5, h6 {
   0% { transform: scale(0.95); opacity: 0.8; }
   50% { transform: scale(1.15); opacity: 1; }
   100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+.trending-list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
 }
 
 .trending-item {
